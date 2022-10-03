@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Bellrringer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/materia/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+    <link rel="stylesheet" href="assets/css/styles.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script>
+              window.onbeforeunload = function (e) {
+                var e = e || window.event;
+                //IE & Firefox
+                if (e) {
+                    e.returnValue = 'Are you sure?';
+                }
+                 return 'Are you sure?';
+   };
+   
+
+      var current = new Date();
+  var cDay = current.getDay();
+  var cHour = current.getHours();
+  var cMinute = current.getHours();
+  var cSecond = current.getSeconds();
+  
+  var audio = new Audio('assets/bell.mp3');
+  
+  var handy_label;
+  var time_output;
+  var offset_output;
+  var time_plural;
+  var offset_plural;
+  var before_output;
+  var before_plural;
+  var slider = 45;
+  var slider_value = 45;
+  
+$(document).ready(function(){
+  $('#intro-modal').modal('show');
+  handy_label = document.getElementById('handy_label');
+  handy_label.innerHTML = "behind";
+  time_plural = document.getElementById('time_plural');
+  offset_plural = document.getElementById('offset_plural');
+  before_plural = document.getElementById('before_plural');
+  before_output = document.getElementById('before_output');
+  time_output = document.getElementById('time_output');
+  time_output.innerHTML = 45;
+  offset_output = document.getElementById('offset_output');
+  offset_output.innerHTML = 0;
+});
+
+  function update() {
+    slider = document.getElementById('delay');
+    slider_value = slider.value;
+  	time_output = document.getElementById('time_output');
+  	before_plural = document.getElementById('before_plural');
+    before_output = document.getElementById('before_output');
+  	time_output.innerHTML = slider.value;
+  	offset_output = document.getElementById('offset_output');
+  	offset_output.innerHTML = slider.value - 45;
+  	before_output.innerHTML = 60 - slider.value;
+  	handy_label = document.getElementById('handy_label');
+  	
+  	if (offset_output.innerHTML >= 1) {
+  	     handy_label.innerHTML = "ahead";
+  	} else {
+  	    handy_label.innerHTML = "behind";
+  	}
+  	
+  	offset_output.innerHTML = Math.abs(offset_output.innerHTML);
+  	
+  	if (time_output.innerHTML == 1 || time_output.innerHTML == -1) {
+  	    time_plural.innerHTML = "";
+  	} else {
+  	    time_plural.innerHTML = "s";
+  	}
+  	if (offset_output.innerHTML == 1 || offset_output.innerHTML == -1) {
+  	    offset_plural.innerHTML = "";
+  	} else {
+  	    offset_plural.innerHTML = "s";
+  	}
+  	if (before_output.innerHTML == 1 || before_output.innerHTML == -1) {
+  	    before_plural.innerHTML = "";
+  	} else {
+  	    before_plural.innerHTML = "s";
+  	}
+  }
+  
+  function reset() {
+  	slider.value = 45;
+  	slider_value = slider.value;
+    
+    update();
+  }
+  
+  function play() {
+      $('#intro-modal').modal('hide');
+      audio.loop = false;
+      audio.currentTime = 0;
+      audio.play();
+  }
+  
+ window.setInterval( function(){
+  current = new Date();
+  cDay = current.getDay();
+  cHour = current.getHours();
+  cMinute = current.getMinutes();
+  cSecond = current.getSeconds();
+  
+  if (audio.currentTime != 0 && audio.currentTime < 23) {
+      if (audio.currentTime > 21) {
+        document.getElementById('status').innerHTML = "Ending"
+      } else {
+        document.getElementById('status').innerHTML = "Playing"
+      }
+    } else {
+        document.getElementById('status').innerHTML = "Waiting"
+    }
+
+    // Add time blocks here
+
+},100);
+</script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md py-3">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span draggable="false" style="user-select:none;">Bellrringer</span></a>
+                <ul class="navbar-nav mx-auto">
+                    <li draggable="false" style="user-select:none;" id="status"></li>
+                </ul><button class="btn btn-primary" type="button" style="margin-left: 10px;" data-bs-target="#time-modal" data-bs-toggle="modal"><i class="material-icons fs-5">settings</i></button>
+        </div>
+    </nav>
+    <section class="py-4 py-xl-5" style="height: 80vh;">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
+                    <div style="width: 100%;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-circle-check" style="font-size: 31px;margin-bottom: 12px;">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M9 12l2 2l4 -4"></path>
+                        </svg>
+                        <h2 class="fw-bold mb-3">You're all set!</h2>
+                        <p class="mb-4">Feel free to change tabs. Outro music will play right before the next bell rings and stop shortly thereafter.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" role="dialog" tabindex="-1" id="intro-modal" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="col-md-8 col-xl-6 text-center mx-auto">
+                        <h2 style="user-select:none;">Bellrringer</h2>
+                        <p class="w-lg-50">Play outro music right up to the bell.</p>
+                    </div>
+                    <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i><span><strong>&nbsp;We&nbsp;recommend</strong>&nbsp;turning your computer volume up as well as setting your clock latency through the settings button to get the best experience.</span></div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-primary" type="button" data-bs-dismiss="modal" style="width: 100%;">Launch</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="time-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="user-select:none;" class="modal-title">Clock Latency</h4>
+                </div>
+                <div class="modal-body">
+                    <p>First, find your clock latency through&nbsp;<a href="https://time.is/" target="_blank">time.is</a>.</p>
+                    <p>Then, drag the slider either forward or behind to account for the clock latency making sure to round up or down.</p><input class="form-range" id="delay" onchange="update()" type="range" value="45" min="1" max="59" step="1">
+                    <p style="font-size: 12px; user-select: none;"><span id="offset_output">0</span> second<span id="offset_plural">s</span> <span id="handy_label"></span> / <span id="time_output">45</span>&nbsp;second<span id="time_plural">s</span> / <span id="before_output">15</span>&nbsp;second<span id="before_plural">s</span> before bell rings</p>
+                </div>
+                <div class="modal-footer"><button class="btn btn-danger" onclick="reset()" type="button">Reset</button><button class="btn btn-primary" data-bs-dismiss="modal" type="button">Done</button></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
